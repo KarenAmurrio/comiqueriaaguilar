@@ -1,0 +1,202 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+---
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Sobre Nosotros - Comiquería Aguilar</title>
+    <meta name="description" content="Conoce la historia, misión y pasión detrás de Comiquería Aguilar." />
+    <meta property="og:title" content="Sobre Nosotros - Comiquería Aguilar" />
+    <script is:inline src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col selection:bg-red-200 selection:text-black">
+    <Header />
+
+    <main class="grow w-full">
+        <!-- Hero Section -->
+        <section class="pt-32 pb-16 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-20 right-20 w-80 h-80 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+                <div class="absolute bottom-0 left-10 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-float" style="animation-delay: 3s;"></div>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+                <div class="bg-white rounded-3xl p-10 md:p-16 shadow-xl border border-gray-100 flex flex-col lg:flex-row gap-12 items-center animate-fade-in-up">
+                    <div class="flex-1 space-y-6">
+                        <span class="inline-flex items-center gap-2 bg-red-50 text-red-600 text-sm font-bold px-4 py-2 rounded-full border border-red-100">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Nuestra Historia
+                        </span>
+                        <h1 class="text-5xl font-black text-gray-900 tracking-tight leading-tight">
+                            Sobre <span class="text-gradient">Nosotros</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 leading-relaxed font-medium">
+                            En <strong class="text-red-600">Comiquería Aguilar</strong>, creemos que cada viñeta cuenta una historia que merece ser vivida. Nacimos de la pasión por el noveno arte, con la misión de traer a tus manos los mejores cómics, mangas y novelas gráficas del multiverso.
+                        </p>
+                        <p class="text-lg text-gray-500 leading-relaxed">
+                            No somos solo una tienda, somos un punto de encuentro para coleccionistas, soñadores y amantes de la cultura pop. Nuestro compromiso es ofrecerte un catálogo curado, ediciones especiales y un servicio al cliente que te hará sentir como en casa.
+                        </p>
+                    </div>
+                    <div class="flex-1 relative w-full">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-red-400 to-blue-500 rounded-3xl transform rotate-3 scale-105 opacity-20 blur-xl"></div>
+                        <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2070&auto=format&fit=crop" alt="Interior de tienda de cómics" class="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-100">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-red-500/20">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 mb-1 counter" data-target="1000">+1000</p>
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Títulos en Catálogo</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-200">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-blue-500/20">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 mb-1">100%</p>
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Productos Originales</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-300">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-green-500/20">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 mb-1">24h</p>
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Envío Local Express</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-400">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-600 flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-purple-500/20">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 mb-1">5★</p>
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Satisfacción Clientes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Values -->
+        <section class="max-w-6xl mx-auto px-6 pb-24">
+            <div class="text-center mb-12 animate-fade-in-up">
+                <h2 class="text-3xl font-black text-gray-900 mb-4">Nuestra Misión</h2>
+                <p class="text-lg text-gray-500 max-w-2xl mx-auto">Tres pilares que definen quiénes somos y cómo servimos a la comunidad.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group animate-fade-in-up delay-100">
+                    <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-red-600 mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Calidad Curada</h3>
+                    <p class="text-gray-500 leading-relaxed">Cada título en nuestro catálogo es seleccionado a mano. No vendemos relleno: cada cómic es una historia que vale la pena.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group animate-fade-in-up delay-200">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Comunidad</h3>
+                    <p class="text-gray-500 leading-relaxed">Creamos un espacio donde fans, coleccionistas y nuevos lectores pueden descubrir y compartir su pasión.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group animate-fade-in-up delay-300">
+                    <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600 mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Servicio Rápido</h3>
+                    <p class="text-gray-500 leading-relaxed">Envíos en 24h en Sucre, atención personalizada por WhatsApp y chat en línea para resolver cualquier duda.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <CartDrawer />
+    <Footer />
+
+    <!-- Botones Flotantes -->
+    <div class="fixed bottom-6 left-6 z-50 flex flex-col gap-4">
+        <button onclick="Tawk_API.maximize()" class="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg hover:-translate-y-1 transition-all flex items-center justify-center group relative">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Scripts Cart -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            let carrito = JSON.parse(localStorage.getItem('carritoStore')) || [];
+            
+            window.eliminarDelCarrito = function(id) {
+                carrito = carrito.filter(item => item.id !== id);
+                localStorage.setItem('carritoStore', JSON.stringify(carrito));
+                actualizarUI();
+            };
+
+            function actualizarUI() {
+                const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+                const cartCountEl = document.getElementById('cart-count');
+                if(cartCountEl) cartCountEl.innerText = totalItems;
+
+                const contenedor = document.getElementById('cart-items');
+                if(!contenedor) return;
+                
+                contenedor.innerHTML = '';
+                let totalCosto = 0;
+
+                if(carrito.length === 0) {
+                    contenedor.innerHTML = '<div class="text-center text-gray-400 mt-10"><p class="text-4xl mb-2">🛒</p><p>Tu carrito está vacío.</p></div>';
+                } else {
+                    carrito.forEach(item => {
+                        totalCosto += (item.precio * item.cantidad);
+                        contenedor.innerHTML += `
+                            <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <img src="${item.imagen}" class="w-16 h-16 object-cover rounded-lg" />
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-sm text-gray-900 leading-tight">${item.titulo}</h4>
+                                    <p class="text-red-600 font-bold text-sm">Bs. ${item.precio} <span class="text-gray-400 font-normal">x ${item.cantidad}</span></p>
+                                </div>
+                                <button onclick="eliminarDelCarrito('${item.id}')" class="text-red-400 hover:text-red-600 p-2 font-black transition-colors">✖</button>
+                            </div>
+                        `;
+                    });
+                }
+
+                const totalEl = document.getElementById('cart-total');
+                if(totalEl) totalEl.innerText = `Bs. ${totalCosto.toFixed(2)}`;
+            }
+
+            const modal = document.getElementById('cart-modal');
+            const drawer = document.getElementById('cart-drawer');
+            const btnCerrar = document.getElementById('btn-cerrar-carrito');
+            
+            function cerrarCarrito() {
+                if(!modal || !drawer) return;
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+            if(btnCerrar) btnCerrar.addEventListener('click', cerrarCarrito);
+            document.getElementById('btn-seguir-comprando')?.addEventListener('click', cerrarCarrito);
+            
+            actualizarUI();
+        });
+    </script>
+    <script is:inline type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
+        Tawk_API.onChatMaximized = function(){ Tawk_API.showWidget(); };
+        Tawk_API.onChatMinimized = function(){ Tawk_API.hideWidget(); };
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/6a300cd3aca9b41d46d770a1/1jr5r46v4';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+---
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Preguntas Frecuentes - Comiquería Aguilar</title>
+    <meta name="description" content="Resolvemos tus dudas sobre envíos, pagos, pedidos especiales y más en Comiquería Aguilar." />
+    <meta property="og:title" content="Preguntas Frecuentes - Comiquería Aguilar" />
+    <script is:inline src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col selection:bg-red-200 selection:text-black">
+    <Header />
+
+    <main class="grow w-full">
+        <!-- Hero Section with gradient -->
+        <section class="pt-32 pb-16 relative overflow-hidden">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+                <div class="absolute top-40 right-10 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s;"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+                <div class="animate-fade-in-up">
+                    <span class="inline-flex items-center gap-2 bg-red-50 text-red-600 text-sm font-bold px-4 py-2 rounded-full mb-6 border border-red-100">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Centro de Ayuda
+                    </span>
+                    <h1 class="text-5xl md:text-6xl font-black text-gray-900 mb-6 tracking-tight leading-tight">
+                        Preguntas <span class="text-gradient">Frecuentes</span>
+                    </h1>
+                    <p class="text-xl text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+                        Todo lo que necesitas saber antes de tu próxima aventura en el multiverso.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Accordion Section -->
+        <section class="max-w-3xl mx-auto px-6 pb-24">
+            <div class="space-y-4" id="faq-container">
+
+                <!-- FAQ Item 1 -->
+                <div class="faq-item animate-fade-in-up delay-100 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <button class="faq-toggle w-full flex items-center gap-5 p-6 text-left cursor-pointer" aria-expanded="false">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors">¿Hacen envíos a todo el país?</h3>
+                        </div>
+                        <div class="faq-chevron w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-green-50">
+                            <svg class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-6 pl-[5.5rem]">
+                            <p class="text-gray-500 leading-relaxed">
+                                ¡Sí! Realizamos envíos seguros a través de couriers certificados a nivel nacional. Los tiempos de entrega varían entre <strong class="text-gray-700">24 y 72 horas</strong> dependiendo de tu ciudad. Recibirás un código de seguimiento en cuanto tu paquete salga de la batcueva.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item animate-fade-in-up delay-200 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <button class="faq-toggle w-full flex items-center gap-5 p-6 text-left cursor-pointer" aria-expanded="false">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">¿Qué métodos de pago aceptan?</h3>
+                        </div>
+                        <div class="faq-chevron w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-blue-50">
+                            <svg class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-6 pl-[5.5rem]">
+                            <p class="text-gray-500 leading-relaxed">
+                                Aceptamos pagos seguros mediante <strong class="text-gray-700">PayPal</strong>, tarjetas de crédito/débito internacionales y <strong class="text-gray-700">transferencias bancarias locales</strong> mediante código QR para mayor comodidad. ¡Tu compra siempre está protegida!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item animate-fade-in-up delay-300 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <button class="faq-toggle w-full flex items-center gap-5 p-6 text-left cursor-pointer" aria-expanded="false">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors">¿Puedo solicitar un cómic que no está en el catálogo?</h3>
+                        </div>
+                        <div class="faq-chevron w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-orange-50">
+                            <svg class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-6 pl-[5.5rem]">
+                            <p class="text-gray-500 leading-relaxed">
+                                ¡Por supuesto! Si estás buscando una edición especial, un manga de importación o un tomo descatalogado, escríbenos por <strong class="text-gray-700">WhatsApp</strong> o nuestro <strong class="text-gray-700">Chat en línea</strong> y nosotros usaremos todos nuestros recursos para conseguirlo por ti.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item animate-fade-in-up delay-400 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <button class="faq-toggle w-full flex items-center gap-5 p-6 text-left cursor-pointer" aria-expanded="false">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">¿Puedo devolver un producto?</h3>
+                        </div>
+                        <div class="faq-chevron w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-purple-50">
+                            <svg class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-6 pl-[5.5rem]">
+                            <p class="text-gray-500 leading-relaxed">
+                                Sí. Si tu producto llega dañado o es diferente al que pediste, tienes <strong class="text-gray-700">7 días hábiles</strong> para solicitar un cambio o devolución. Contáctanos con fotos del problema y lo resolvemos sin complicaciones.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item animate-fade-in-up delay-500 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <button class="faq-toggle w-full flex items-center gap-5 p-6 text-left cursor-pointer" aria-expanded="false">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-400 to-red-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-rose-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-rose-600 transition-colors">¿Cuánto tarda en llegar mi pedido?</h3>
+                        </div>
+                        <div class="faq-chevron w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-rose-50">
+                            <svg class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-6 pl-[5.5rem]">
+                            <p class="text-gray-500 leading-relaxed">
+                                Los pedidos dentro de <strong class="text-gray-700">Sucre</strong> se entregan en <strong class="text-gray-700">24 horas</strong>. Para el resto del país, el envío tarda entre <strong class="text-gray-700">48 y 72 horas</strong> dependiendo de la disponibilidad del courier en tu zona. Siempre recibirás un código de rastreo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-16 animate-fade-in-up delay-600">
+                <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
+                    <!-- Decorative elements -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-red-500 rounded-full mix-blend-overlay filter blur-3xl opacity-20"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-500 rounded-full mix-blend-overlay filter blur-3xl opacity-20"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-black text-white mb-4">¿No encontraste tu respuesta?</h3>
+                        <p class="text-gray-400 mb-8 text-lg max-w-md mx-auto">Nuestro equipo está listo para ayudarte. Contáctanos por cualquiera de estos canales.</p>
+                        
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <a href="https://wa.me/59177124861?text=Hola%20Comiquería%20Aguilar!%20Tengo%20una%20consulta." target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-green-500/25 hover:-translate-y-1 transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                                WhatsApp
+                            </a>
+                            <button onclick="Tawk_API.maximize()"
+                                class="inline-flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-500/25 hover:-translate-y-1 transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                Chat en Línea
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <CartDrawer />
+    <Footer />
+
+    <!-- Scripts Cart -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            let carrito = JSON.parse(localStorage.getItem('carritoStore')) || [];
+            
+            window.eliminarDelCarrito = function(id) {
+                carrito = carrito.filter(item => item.id !== id);
+                localStorage.setItem('carritoStore', JSON.stringify(carrito));
+                actualizarUI();
+            };
+
+            function actualizarUI() {
+                const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+                const cartCountEl = document.getElementById('cart-count');
+                if(cartCountEl) cartCountEl.innerText = totalItems;
+
+                const contenedor = document.getElementById('cart-items');
+                if(!contenedor) return;
+                
+                contenedor.innerHTML = '';
+                let totalCosto = 0;
+
+                if(carrito.length === 0) {
+                    contenedor.innerHTML = '<div class="text-center text-gray-400 mt-10"><p class="text-4xl mb-2">🛒</p><p>Tu carrito está vacío.</p></div>';
+                } else {
+                    carrito.forEach(item => {
+                        totalCosto += (item.precio * item.cantidad);
+                        contenedor.innerHTML += `
+                            <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <img src="${item.imagen}" class="w-16 h-16 object-cover rounded-lg" />
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-sm text-gray-900 leading-tight">${item.titulo}</h4>
+                                    <p class="text-red-600 font-bold text-sm">Bs. ${item.precio} <span class="text-gray-400 font-normal">x ${item.cantidad}</span></p>
+                                </div>
+                                <button onclick="eliminarDelCarrito('${item.id}')" class="text-red-400 hover:text-red-600 p-2 font-black transition-colors">✖</button>
+                            </div>
+                        `;
+                    });
+                }
+
+                const totalEl = document.getElementById('cart-total');
+                if(totalEl) totalEl.innerText = `Bs. ${totalCosto.toFixed(2)}`;
+            }
+
+            const modal = document.getElementById('cart-modal');
+            const drawer = document.getElementById('cart-drawer');
+            const btnCerrar = document.getElementById('btn-cerrar-carrito');
+            
+            function cerrarCarrito() {
+                if(!modal || !drawer) return;
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+            if(btnCerrar) btnCerrar.addEventListener('click', cerrarCarrito);
+            document.getElementById('btn-seguir-comprando')?.addEventListener('click', cerrarCarrito);
+            
+            actualizarUI();
+
+            // === FAQ Accordion Logic ===
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const item = toggle.parentElement;
+                    const content = item.querySelector('.accordion-content');
+                    const chevron = toggle.querySelector('.faq-chevron svg');
+                    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+                    // Close all other items
+                    document.querySelectorAll('.faq-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            const otherContent = otherItem.querySelector('.accordion-content');
+                            const otherChevron = otherItem.querySelector('.faq-chevron svg');
+                            const otherToggle = otherItem.querySelector('.faq-toggle');
+                            otherContent.style.maxHeight = '0px';
+                            otherContent.classList.remove('open');
+                            otherChevron.style.transform = 'rotate(0deg)';
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                            otherItem.classList.remove('ring-2', 'ring-gray-200');
+                        }
+                    });
+
+                    // Toggle current item
+                    if (isOpen) {
+                        content.style.maxHeight = '0px';
+                        content.classList.remove('open');
+                        chevron.style.transform = 'rotate(0deg)';
+                        toggle.setAttribute('aria-expanded', 'false');
+                        item.classList.remove('ring-2', 'ring-gray-200');
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.classList.add('open');
+                        chevron.style.transform = 'rotate(180deg)';
+                        toggle.setAttribute('aria-expanded', 'true');
+                        item.classList.add('ring-2', 'ring-gray-200');
+                    }
+                });
+            });
+        });
+    </script>
+    <script is:inline type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
+        Tawk_API.onChatMaximized = function(){ Tawk_API.showWidget(); };
+        Tawk_API.onChatMinimized = function(){ Tawk_API.hideWidget(); };
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/6a300cd3aca9b41d46d770a1/1jr5r46v4';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+</body>
+</html>

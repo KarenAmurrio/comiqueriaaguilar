@@ -1,0 +1,577 @@
+---
+import Header from '../components/Header.astro';
+const API_URL = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
+---
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Checkout - Comiquería Aguilar</title>
+    
+    <script is:inline src="https://cdn.tailwindcss.com"></script>
+    <script is:inline src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script define:vars={{ API_URL }}>
+        window.API_URL = API_URL;
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+    
+    <header class="w-full bg-white border-b border-gray-200 p-4 px-6 flex justify-center">
+        <a href="/" class="text-2xl font-black tracking-tight text-gray-900 hover:text-red-600 transition-colors">
+            ⚡ COMIQUERÍA AGUILAR
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6 pt-12 grow w-full">
+        <div class="flex items-center gap-4 mb-8">
+            <a href="/" class="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:text-red-600 hover:border-red-500 hover:shadow-sm transition-all text-xl" title="Volver y cancelar pedido">
+                ←
+            </a>
+            <h2 class="text-3xl font-black border-l-4 border-red-500 pl-4">Finalizar Pedido</h2>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <div class="w-full lg:w-2/3 space-y-8">
+                
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span class="bg-red-100 text-red-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">1</span> 
+                        Datos Personales
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Nombre Completo</label>
+                            <input type="text" id="input-nombre" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Correo Electrónico</label>
+                            <input type="email" id="input-correo" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">WhatsApp</label>
+                            <input type="tel" id="input-telefono" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Carnet de Identidad (CI)</label>
+                            <input type="text" id="input-ci" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span class="bg-red-100 text-red-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">2</span> 
+                        Método de Entrega
+                    </h3>
+                    <div class="space-y-3">
+                        <label class="flex items-start gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-red-50 transition-colors">
+                            <input type="radio" name="entrega" value="Retiro en local" class="mt-1 text-red-600" checked>
+                            <div>
+                                <p class="font-bold">Retiro en local (Sucre)</p>
+                                <p class="text-sm text-gray-500">Pasa por nuestra tienda cuando gustes. ¡Gratis!</p>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-start gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-red-50 transition-colors">
+                            <input type="radio" name="entrega" value="Envío a Domicilio" class="mt-1">
+                            <div>
+                                <p class="font-bold">Envío a Domicilio</p>
+                                <p class="text-sm text-gray-500">Delivery seguro hasta la puerta de tu casa (+ Bs. 15).</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-red-50 transition-colors">
+                            <input type="radio" name="entrega" value="Envío por Terminal" class="mt-1">
+                            <div>
+                                <p class="font-bold">Envío por Terminal de Buses</p>
+                                <p class="text-sm text-gray-500">Para envíos al interior del país. Pago del flete en destino.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Campos condicionales de envío -->
+                    <div id="detalles-entrega-container" class="mt-6 p-5 border border-red-100 bg-red-50/20 rounded-2xl hidden transition-all duration-300">
+                        <!-- Caso: Envío a Domicilio -->
+                        <div id="campos-domicilio" class="hidden space-y-4">
+                            <h4 class="text-sm font-black text-gray-800 border-b pb-2">Dirección de Entrega</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Calle / Avenida / Pasaje</label>
+                                    <input type="text" id="input-calle" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. Calle Aroma">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Número de Casa / Puerta / Depto</label>
+                                    <input type="text" id="input-nro-casa" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. #450 o Depto 3B">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-600 mb-1">Referencias adicionales (Color de fachada, frente a..., etc.)</label>
+                                <input type="text" id="input-referencia" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. Puerta verde al lado de la tienda de abarrotes">
+                            </div>
+                        </div>
+                        
+                        <!-- Caso: Envío por Terminal -->
+                        <div id="campos-terminal" class="hidden space-y-4">
+                            <h4 class="text-sm font-black text-gray-800 border-b pb-2">Detalles del Envío Nacional</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Ciudad / Departamento de Destino</label>
+                                    <input type="text" id="input-ciudad" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. Cochabamba">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Provincia o Localidad</label>
+                                    <input type="text" id="input-provincia" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. Cercado">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-600 mb-1">Terminal de Buses / Empresa de transporte de preferencia (Opcional)</label>
+                                <input type="text" id="input-empresa-transporte" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-red-500 outline-none text-sm" placeholder="Ej. Flota Copacabana o Trans Bolívar">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="w-full lg:w-1/3">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 sticky top-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span class="bg-red-100 text-red-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">3</span> 
+                        Pago
+                    </h3>
+                    
+                    <div id="checkout-items" class="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2"></div>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-6">
+                        <div class="flex justify-between items-center mb-2 text-gray-600">
+                            <span>Subtotal:</span>
+                            <span id="checkout-subtotal">Bs. 0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4 text-gray-600">
+                            <span>Envío:</span>
+                            <span class="text-green-500 font-bold">Por calcular</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">Total Final:</span>
+                            <span id="checkout-total" class="font-black text-3xl text-red-600">Bs. 0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Selector de método de pago -->
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <button type="button" id="btn-pago-paypal" class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-red-500 bg-red-50/50 hover:bg-red-50 transition-all text-center group">
+                            <span class="text-xl mb-1 group-hover:scale-110 transition-transform">💳</span>
+                            <span class="font-bold text-xs text-gray-800">PayPal / Tarjeta</span>
+                        </button>
+                        <button type="button" id="btn-pago-qr" class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 bg-white hover:bg-gray-50 transition-all text-center group">
+                            <span class="text-xl mb-1 group-hover:scale-110 transition-transform">📱</span>
+                            <span class="font-bold text-xs text-gray-800">Pago QR Simple</span>
+                        </button>
+                    </div>
+
+                    <!-- Contenedores de Pago -->
+                    <div id="container-paypal" class="w-full transition-all duration-300">
+                        <div id="paypal-checkout-container" class="w-full"></div>
+                    </div>
+
+                    <div id="container-qr" class="w-full hidden transition-all duration-300 space-y-4">
+                        <div class="border border-purple-100 bg-purple-50/50 rounded-2xl p-4 text-center">
+                            <p class="text-[11px] text-purple-800 font-bold mb-3">Escanea el código QR desde tu app bancaria y sube el comprobante:</p>
+                            
+                            <div class="relative inline-block bg-white p-3 rounded-2xl shadow-sm border border-purple-100 mb-3 group">
+                                <img src="/qr-pago.png" alt="QR de Pago" class="w-44 h-44 object-contain mx-auto transition-transform group-hover:scale-105 duration-300" />
+                                <div class="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300 pointer-events-none">
+                                    <span class="bg-white/95 text-purple-700 text-[10px] font-black px-2 py-1 rounded-md shadow-sm">QR Valor No Definido</span>
+                                </div>
+                            </div>
+
+                            <p class="text-[11px] text-gray-500 font-medium">Monto a pagar: <span id="qr-total-placeholder" class="font-bold text-purple-700">Bs. 0.00</span></p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-[11px] font-bold text-gray-700">Comprobante de Pago (Foto / Screenshot)</label>
+                            
+                            <div id="dropzone-comprobante" class="border-2 border-dashed border-gray-300 hover:border-purple-500 bg-gray-50 rounded-2xl p-4 text-center cursor-pointer transition-colors relative flex flex-col items-center justify-center min-h-[120px]">
+                                <input type="file" id="input-comprobante" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                                <div id="dropzone-content-default" class="flex flex-col items-center">
+                                    <span class="text-2xl mb-1 text-gray-400">📸</span>
+                                    <p class="text-xs font-bold text-gray-700 mb-0.5">Arrastra tu comprobante aquí</p>
+                                    <p class="text-[10px] text-gray-400">o haz clic para buscar archivo</p>
+                                </div>
+                                <div id="dropzone-content-preview" class="hidden flex flex-col items-center w-full">
+                                    <div class="relative inline-block w-16 h-16 border rounded-lg overflow-hidden bg-white shadow-sm mb-1">
+                                        <img id="img-preview" src="" class="w-full h-full object-cover" />
+                                        <button type="button" id="btn-remove-file" class="absolute top-0.5 right-0.5 bg-red-500 hover:bg-red-600 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-black transition-colors shadow-sm">&times;</button>
+                                    </div>
+                                    <p id="file-name-placeholder" class="text-[10px] font-bold text-purple-700 truncate max-w-[180px]"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" id="btn-confirmar-qr" class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-extrabold text-sm rounded-xl transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
+                            <span>🚀</span> Confirmar Pedido y Enviar QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 bg-white text-center text-gray-400 text-sm mt-auto border-t border-gray-100">
+        &copy; 2026 Comiquería Aguilar - Pago 100% Seguro
+    </footer>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carrito = JSON.parse(localStorage.getItem('carritoStore')) || [];
+            const contenedorItems = document.getElementById('checkout-items');
+            const totalEl = document.getElementById('checkout-total');
+            const subtotalEl = document.getElementById('checkout-subtotal');
+            const qrTotalPlaceholder = document.getElementById('qr-total-placeholder');
+            
+            let totalCosto = 0;
+
+            if(carrito.length === 0) {
+                contenedorItems.innerHTML = '<p class="text-gray-500 text-center">Tu carrito está vacío. <br><a href="/" class="text-red-600 font-bold underline">Volver a la tienda</a></p>';
+            } else {
+                carrito.forEach(item => {
+                    totalCosto += (item.precio * item.cantidad);
+                    contenedorItems.innerHTML += `
+                        <div class="flex justify-between items-center text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-gray-500">${item.cantidad}x</span>
+                                <span class="text-gray-800 line-clamp-1 w-32">${item.titulo}</span>
+                            </div>
+                            <span class="font-bold text-gray-900">Bs. ${(item.precio * item.cantidad).toFixed(2)}</span>
+                        </div>
+                    `;
+                });
+            }
+
+            totalEl.innerText = `Bs. ${totalCosto.toFixed(2)}`;
+            subtotalEl.innerText = `Bs. ${totalCosto.toFixed(2)}`;
+            if (qrTotalPlaceholder) {
+                qrTotalPlaceholder.innerText = `Bs. ${totalCosto.toFixed(2)}`;
+            }
+
+            // --- DETALLES DE ENTREGA CONDICIONALES ---
+            const radiosEntrega = document.querySelectorAll('input[name="entrega"]');
+            const detallesEntregaContainer = document.getElementById('detalles-entrega-container');
+            const camposDomicilio = document.getElementById('campos-domicilio');
+            const camposTerminal = document.getElementById('campos-terminal');
+
+            function actualizarCamposEntrega() {
+                const seleccionado = document.querySelector('input[name="entrega"]:checked').value;
+                if (seleccionado === 'Retiro en local') {
+                    detallesEntregaContainer.classList.add('hidden');
+                    camposDomicilio.classList.add('hidden');
+                    camposTerminal.classList.add('hidden');
+                } else if (seleccionado === 'Envío a Domicilio') {
+                    detallesEntregaContainer.classList.remove('hidden');
+                    camposDomicilio.classList.remove('hidden');
+                    camposTerminal.classList.add('hidden');
+                } else if (seleccionado === 'Envío por Terminal') {
+                    detallesEntregaContainer.classList.remove('hidden');
+                    camposDomicilio.classList.add('hidden');
+                    camposTerminal.classList.remove('hidden');
+                }
+            }
+
+            radiosEntrega.forEach(radio => {
+                radio.addEventListener('change', actualizarCamposEntrega);
+            });
+
+            // Inicializar campos condicionales
+            actualizarCamposEntrega();
+
+            // --- FUNCIÓN DE VALIDACIÓN GLOBAL ---
+            function validarYObtenerDatos() {
+                const nombre = document.getElementById('input-nombre').value.trim();
+                const correo = document.getElementById('input-correo').value.trim();
+                const telefono = document.getElementById('input-telefono').value.trim();
+                const ci = document.getElementById('input-ci').value.trim();
+                const entregaEl = document.querySelector('input[name="entrega"]:checked');
+                const metodoEntregaBase = entregaEl ? entregaEl.value : 'Retiro en local';
+                
+                if (!nombre || !correo || !telefono || !ci) {
+                    Swal.fire({
+                        title: 'Datos incompletos',
+                        text: 'Por favor, rellena todos los campos de tus Datos Personales.',
+                        icon: 'warning',
+                        confirmButtonColor: '#9333ea'
+                    });
+                    return { valid: false };
+                }
+                
+                let entregaCompleto = metodoEntregaBase;
+                if (metodoEntregaBase === 'Envío a Domicilio') {
+                    const calle = document.getElementById('input-calle').value.trim();
+                    const nro = document.getElementById('input-nro-casa').value.trim();
+                    const ref = document.getElementById('input-referencia').value.trim();
+                    
+                    if (!calle || !nro) {
+                        Swal.fire({
+                            title: 'Dirección incompleta',
+                            text: 'Por favor, introduce la calle y número para el envío a domicilio.',
+                            icon: 'warning',
+                            confirmButtonColor: '#9333ea'
+                        });
+                        return { valid: false };
+                    }
+                    
+                    entregaCompleto = `Domicilio: ${calle} #${nro}${ref ? ' (' + ref + ')' : ''}`;
+                } else if (metodoEntregaBase === 'Envío por Terminal') {
+                    const ciudad = document.getElementById('input-ciudad').value.trim();
+                    const prov = document.getElementById('input-provincia').value.trim();
+                    const empresa = document.getElementById('input-empresa-transporte').value.trim();
+                    
+                    if (!ciudad || !prov) {
+                        Swal.fire({
+                            title: 'Destino incompleto',
+                            text: 'Por favor, especifica la ciudad y provincia para el envío por terminal.',
+                            icon: 'warning',
+                            confirmButtonColor: '#9333ea'
+                        });
+                        return { valid: false };
+                    }
+                    
+                    entregaCompleto = `Terminal: ${ciudad} - Prov. ${prov}${empresa ? ' (' + empresa + ')' : ''}`;
+                }
+                
+                return {
+                    valid: true,
+                    datos: {
+                        cliente: nombre,
+                        correo: correo,
+                        telefono: `${telefono} (CI: ${ci})`,
+                        metodo_entrega: entregaCompleto
+                    }
+                };
+            }
+
+            // --- SELECTOR DE MÉTODO DE PAGO ---
+            const btnPaypal = document.getElementById('btn-pago-paypal');
+            const btnQr = document.getElementById('btn-pago-qr');
+            const containerPaypal = document.getElementById('container-paypal');
+            const containerQr = document.getElementById('container-qr');
+
+            btnPaypal.addEventListener('click', () => {
+                btnPaypal.classList.add('border-red-500', 'bg-red-50/50');
+                btnPaypal.classList.remove('border-gray-200', 'bg-white');
+                btnQr.classList.add('border-gray-200', 'bg-white');
+                btnQr.classList.remove('border-purple-500', 'bg-purple-50/50');
+                
+                containerPaypal.classList.remove('hidden');
+                containerQr.classList.add('hidden');
+            });
+
+            btnQr.addEventListener('click', () => {
+                btnQr.classList.add('border-purple-500', 'bg-purple-50/50');
+                btnQr.classList.remove('border-gray-200', 'bg-white');
+                btnPaypal.classList.add('border-gray-200', 'bg-white');
+                btnPaypal.classList.remove('border-red-500', 'bg-red-50/50');
+                
+                containerPaypal.classList.add('hidden');
+                containerQr.classList.remove('hidden');
+            });
+
+            // --- MANEJO DE ARCHIVO COMPROBANTE ---
+            const inputComprobante = document.getElementById('input-comprobante');
+            const dropzoneDefault = document.getElementById('dropzone-content-default');
+            const dropzonePreview = document.getElementById('dropzone-content-preview');
+            const imgPreview = document.getElementById('img-preview');
+            const fileNamePlaceholder = document.getElementById('file-name-placeholder');
+            const btnRemoveFile = document.getElementById('btn-remove-file');
+
+            inputComprobante.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (!file.type.startsWith('image/')) {
+                        Swal.fire({
+                            title: 'Archivo inválido',
+                            text: 'Por favor, sube únicamente imágenes (JPG, PNG, WEBP, etc.)',
+                            icon: 'warning',
+                            confirmButtonColor: '#9333ea'
+                        });
+                        inputComprobante.value = '';
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        imgPreview.src = event.target.result;
+                        dropzoneDefault.classList.add('hidden');
+                        dropzonePreview.classList.remove('hidden');
+                        fileNamePlaceholder.innerText = file.name;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            btnRemoveFile.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                inputComprobante.value = '';
+                dropzonePreview.classList.add('hidden');
+                dropzoneDefault.classList.remove('hidden');
+                imgPreview.src = '';
+                fileNamePlaceholder.innerText = '';
+            });
+
+            // --- CONFIRMACIÓN PAGO QR ---
+            const btnConfirmarQr = document.getElementById('btn-confirmar-qr');
+            btnConfirmarQr.addEventListener('click', () => {
+                const validation = validarYObtenerDatos();
+                if (!validation.valid) return;
+
+                const file = inputComprobante.files[0];
+                if (!file) {
+                    Swal.fire({
+                        title: 'Comprobante requerido',
+                        text: 'Por favor, sube una foto de tu comprobante de pago.',
+                        icon: 'warning',
+                        confirmButtonColor: '#9333ea'
+                    });
+                    return;
+                }
+
+                const detallesPedido = carrito.map(item => `${item.cantidad}x ${item.titulo}`).join(' | ');
+
+                Swal.fire({
+                    title: 'Procesando pedido...',
+                    text: 'Guardando datos y subiendo el comprobante. Por favor espera.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                const formData = new FormData();
+                formData.append('cliente', validation.datos.cliente);
+                formData.append('correo', validation.datos.correo);
+                formData.append('telefono', validation.datos.telefono);
+                formData.append('metodo_entrega', validation.datos.metodo_entrega);
+                formData.append('total', totalCosto);
+                formData.append('detalles', detallesPedido);
+                formData.append('metodo_pago', 'qr');
+                formData.append('comprobante', file);
+
+                const apiBase = window.API_URL || 'http://127.0.0.1:8000/api';
+                fetch(`${apiBase}/pedidos`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Error en el servidor');
+                    return res.json();
+                })
+                .then(data => {
+                    Swal.fire({
+                        title: '¡Pedido Recibido!',
+                        text: 'Hemos recibido tu comprobante. Nuestro equipo validará el pago y se contactará contigo.',
+                        icon: 'success',
+                        confirmButtonColor: '#9333ea',
+                        confirmButtonText: 'Volver a la tienda'
+                    }).then(() => {
+                        localStorage.removeItem('carritoStore');
+                        window.location.href = '/';
+                    });
+                })
+                .catch(err => {
+                    console.error("Error al guardar pedido QR:", err);
+                    Swal.fire({
+                        title: 'Error de Red',
+                        text: 'Hubo un problema al subir tu comprobante. Por favor, intenta de nuevo o contáctanos por WhatsApp.',
+                        icon: 'error',
+                        confirmButtonColor: '#9333ea'
+                    });
+                });
+            });
+
+            // Renderizar PayPal solo si hay total
+            if(totalCosto > 0 && document.getElementById('paypal-checkout-container')) {
+                
+                const tipoDeCambio = 6.96; 
+                const totalEnDolares = (totalCosto / tipoDeCambio).toFixed(2);
+                
+                paypal.Buttons({
+                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
+                    onClick: function(data, actions) {
+                        const validation = validarYObtenerDatos();
+                        if (!validation.valid) {
+                            return actions.reject();
+                        } else {
+                            return actions.resolve();
+                        }
+                    },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                description: "Compra en Comiquería Aguilar",
+                                amount: { value: totalEnDolares } 
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            const validation = validarYObtenerDatos();
+                            if (!validation.valid) return;
+                            
+                            const detallesPedido = carrito.map(item => `${item.cantidad}x ${item.titulo}`).join(' | ');
+
+                            const apiBase = window.API_URL || 'http://127.0.0.1:8000/api';
+                            fetch(`${apiBase}/pedidos`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    cliente: validation.datos.cliente,
+                                    correo: validation.datos.correo,
+                                    telefono: validation.datos.telefono,
+                                    metodo_entrega: validation.datos.metodo_entrega,
+                                    total: totalCosto,
+                                    detalles: detallesPedido,
+                                    metodo_pago: 'paypal'
+                                })
+                            }).then(() => {
+                                Swal.fire({
+                                    title: '¡Pago Exitoso!',
+                                    text: 'Hemos recibido tu pedido. Te contactaremos pronto.',
+                                    icon: 'success',
+                                    confirmButtonColor: '#9333ea',
+                                    confirmButtonText: 'Volver a la tienda'
+                                }).then(() => {
+                                    localStorage.removeItem('carritoStore');
+                                    window.location.href = '/'; 
+                                });
+                            }).catch(err => {
+                                 console.error("Error al guardar en Laravel:", err);
+                                 Swal.fire({
+                                    title: '¡Pago Exitoso!',
+                                    text: 'Tu pago se procesó, pero hubo un retraso guardando el recibo. Contáctanos por WhatsApp con tu correo.',
+                                    icon: 'success',
+                                    confirmButtonColor: '#9333ea',
+                                    confirmButtonText: 'Volver a la tienda'
+                                }).then(() => {
+                                    localStorage.removeItem('carritoStore');
+                                    window.location.href = '/'; 
+                                });
+                            });
+
+                        }).catch(function(error) {
+                            console.error("Error en la captura:", error);
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Hubo un problema procesando el pago. Intenta de nuevo.',
+                                icon: 'error',
+                                confirmButtonColor: '#9333ea'
+                            });
+                        });
+                    }
+                }).render('#paypal-checkout-container');
+            }
+        });
+    </script>
+</body>
+</html>
